@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Image Galery
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Id or text filter" (ionChange)="filterChange($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngIf="home.infiniteScrollList.length === 0">
+      <div class="text-placeholder">
+        No results found 
+      </div>
+    </ion-item>
+    <ion-item *ngFor="let card of home.infiniteScrollList">
+      <div class="container">
+        <app-image-card>
+          <div class="card-container">
+            <div class="image">
+              <img class="images" [src]="card.photo"
+                onerror="this.onerror=null ; this.src='https\:\/\/via.placeholder.com/500'">
+            </div>
+            <div class="text-content">
+              <app-key-value-text class="texts">
+                <div class="key">
+                  Description:
+                </div>
+                <div class="value">
+                  {{card.text}}
+                </div>
+              </app-key-value-text>
+            </div>
+          </div>
+        </app-image-card>
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
